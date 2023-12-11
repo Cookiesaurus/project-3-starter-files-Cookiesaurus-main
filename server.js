@@ -17,21 +17,27 @@ app.get("/",async function(req,res){
     //await as the data layer methods are asynchronous
     res.json({"response":"this is the appropriate response"});  
 });
+app.delete("/company", async function(req,res){
+    const company = req.query.company;
+    const resp = await service.deleteCompany(company);  
+    res.status(resp.status).json(resp.resp);
+    
+});
 app.get("/departments",async function(req,res){
     //call the appropriate dl methods/objects using
     //await as the data layer methods are asynchronous
-    const departments = await service.getAllDepartment();
-
-    res.json(departments);  
+    const resp = await service.getAllDepartment();
+console.log(resp);
+    res.status(resp.status).json(resp.resp);  
 });
 app.get("/department/",async function(req,res){
     const id = req.query.dept_id;
     console.log("ID", id);
     //call the appropriate dl methods/objects using
     //await as the data layer methods are asynchronous
-    const department = await service.getDepartment(id);
+    const resp = await service.getDepartment(id);
 
-    res.json(department);  
+    res.status(resp.status).json(resp.resp);  
 });
 app.post("/department",async function(req,res){
     const data = req.body;
@@ -52,18 +58,18 @@ app.delete("/department",async function(req,res){
 app.get("/employees",async function(req,res){
     //call the appropriate dl methods/objects using
     //await as the data layer methods are asynchronous
-    const employees = await service.getAllEmployee();
+    const resp = await service.getAllEmployee();
 
-    res.json(employees);  
+    res.status(resp.status).json(resp.resp);  
 });
 app.get("/employee/",async function(req,res){
     const id = req.query.emp_id;
     console.log("ID", id);
     //call the appropriate dl methods/objects using
     //await as the data layer methods are asynchronous
-    const employee = await service.getEmployee(id);
+    const resp = await service.getEmployee(id);
 
-    res.json(employee);  
+    res.status(resp.status).json(resp.resp);  
 });
 app.post("/employee",async function(req,res){
     const data = req.body;
@@ -83,17 +89,18 @@ app.delete("/employee",async function(req,res){
 
 app.get("/timecards",async function(req,res){  
     const id = req.query.emp_id;
-    const timecards = await service.getAllTimecard(id);
-    res.json(timecards);  
+    console.log("Get All TimeCards by ID", id);
+    const resp = await service.getAllTimecard(id);
+    res.status(resp.status).json(resp.resp);  
 });
 app.get("/timecard/",async function(req,res){
     const id = req.query.timecard_id;
-    console.log("ID", id);
+    console.log("Get TimeCard ID", id);
     //call the appropriate dl methods/objects using
     //await as the data layer methods are asynchronous
-    const timecard = await service.getTimecard(id);
+    const resp = await service.getTimecard(id);
 
-    res.json(timecard);  
+    res.status(resp.status).json(resp.resp);  
 });
 app.post("/timecard",async function(req,res){
     const data = req.body;
